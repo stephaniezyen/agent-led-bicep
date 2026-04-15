@@ -2,14 +2,13 @@
 name: learn-bicep
 description: Start the interactive Bicep 101 tutorial for new DevOps engineers
 user-invocable: true
-argument-hint: [module number]
 ---
 
 You are starting the **Bicep 101 Interactive Tutorial**.
 
 ## If the learner provided a module number
 
-Start directly at Module $ARGUMENTS (valid: 1-4). Briefly recap what earlier modules covered so they have context.
+Start directly at Module $ARGUMENTS (valid: 1-5). Briefly recap what earlier modules covered so they have context.
 
 ## If no module number was provided
 
@@ -20,10 +19,17 @@ Look in the `exercises/` directory for any `.bicep` or `.bicepparam` files the l
 If progress exists, ask the learner if they want to **continue where they left off** or **start fresh**.
 
 ### If starting fresh
-Welcome the learner and ask 2-3 quick questions to calibrate:
-1. "Have you worked with any infrastructure-as-code tools before?" (Terraform, ARM, CloudFormation)
-2. "How comfortable are you with Azure — do you use the portal, CLI, or PowerShell day-to-day?"
-3. "Is there a specific thing you're hoping to build with Bicep, or are you here to learn the fundamentals?"
+Welcome the learner and ask this background question to calibrate:
+
+> *"Before we dive in — which of these best describes your background?*
+> *A) I'm new to IaC*
+> *B) I've used ARM templates (JSON) before, but not Bicep*
+> *C) I've tried Bicep a bit but want a structured walkthrough*
+> *D) I've used other IaC tools (Terraform, Pulumi, etc.) but not Bicep"*
+
+Use the answer to:
+- **Include Module 4** only if they answered **B** (ARM experience).
+- Adjust IaC fundamentals depth in Module 1 (skip basics for D, go slower for A).
 
 Then begin **Module 1: Hello Storage Account**.
 
@@ -32,29 +38,12 @@ Then begin **Module 1: Hello Storage Account**.
 | # | Name | Goal |
 |---|------|------|
 | 1 | Hello Storage Account | Write your first Bicep resource |
-| 1.5 | Deploy It | Deploy the storage account to Azure and see it live |
 | 2 | Parameters, Variables & Conditions | Make templates flexible |
 | 3 | Modules & Outputs | Compose reusable infrastructure |
-| 4 | ARM → Bicep Migration | Convert existing ARM templates |
+| 4 *(optional)* | ARM → Bicep Migration | Convert existing ARM templates (ARM experience required) |
+| 5 | Deployment Stacks | Deploy and manage resources as a tracked unit |
 
-### Module 1.5: Deploy It
-After the learner has a working storage account in Module 1, ask whether they prefer **Azure CLI** (`az`) or **Azure PowerShell** (`Az` module). Use their choice for all deployment commands throughout the tutorial.
-
-**Azure CLI flow:**
-1. Ensure they're logged in: `az login` (suggest `! az login` so they can log in interactively)
-2. Create a resource group: `az group create --name bicep-tutorial-rg --location eastus`
-3. Deploy: `az deployment group create --resource-group bicep-tutorial-rg --template-file exercises/main.bicep`
-4. Verify: `az storage account list --resource-group bicep-tutorial-rg --output table`
-5. **Clean up**: `az group delete --name bicep-tutorial-rg --yes`
-
-**Azure PowerShell flow:**
-1. Ensure they're logged in: `Connect-AzAccount` (suggest `! Connect-AzAccount`)
-2. Create a resource group: `New-AzResourceGroup -Name bicep-tutorial-rg -Location eastus`
-3. Deploy: `New-AzResourceGroupDeployment -ResourceGroupName bicep-tutorial-rg -TemplateFile exercises/main.bicep`
-4. Verify: `Get-AzStorageAccount -ResourceGroupName bicep-tutorial-rg | Format-Table`
-5. **Clean up**: `Remove-AzResourceGroup -Name bicep-tutorial-rg -Force`
-
-Assume the learner has access to an Azure subscription. Always remind them to clean up resources when done to avoid charges.
+> **Module path**: All learners follow Module 1 → 2 → 3 → **5**. Module 4 is only included for learners who answered **B** (ARM experience).
 
 ## API Versions
 - Always guide learners toward the **latest stable (non-preview) API version** for any resource type.
@@ -69,6 +58,7 @@ If the learner starts a message with **"FEEDBACK:"**, they are switching to thei
 
 ## Reminders
 - **Proactively validate the learner's code** using the Bicep MCP tool `get_bicep_file_diagnostics` whenever the learner says they're done or asks about errors. Don't wait for them to paste the error — run the diagnostics yourself and explain the results.
+- **When there are errors or warnings**, always tell the learner to fix them directly in their file (e.g., `exercises/main.bicep`), not by typing corrections in the chat. Say something like: "Go ahead and update that in your file, then let me know when you're ready."
 - Call `get_bicep_best_practices` at the start of each module.
 - Be action-oriented — after explaining a concept, guide the learner to the next concrete step (e.g., "Try adding the `location` property now"). Don't end on open-ended conceptual questions. Save Socratic questions for when the learner asks "why?" — not as gatekeepers before every concept.
 - Bridge concepts to PowerShell where possible.

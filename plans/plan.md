@@ -52,13 +52,10 @@ Uses the DLL bundled with the VS Code Bicep extension:
       SKILL.md                  # /bicep-quiz — knowledge check
 .mcp.json                       # Bicep MCP server config (shareable)
 exercises/
-  01-hello-storage/
-    README.md                   # Instructions + hints
-  02-parameters-variables/
-    README.md
-  03-modules-outputs/
-    README.md
-  04-arm-to-bicep/
+  main.bicep                    # Learner's working file (Modules 1, 2, 3, 5)
+  modules/
+    storage.bicep               # Module 3: extracted storage module
+  04-arm-to-bicep/              # Optional — only used in Module 4
     sample.json                 # ARM template for decompile exercise
 ```
 
@@ -82,9 +79,10 @@ exercises/
 | 1 — Hello Storage | `get_bicep_best_practices`, `get_az_resource_type_schema`, `get_bicep_file_diagnostics` |
 | 2 — Params & Variables | `get_bicep_file_diagnostics`, `format_bicep_file` |
 | 3 — Modules & Outputs | `list_avm_metadata`, `get_file_references`, `get_deployment_snapshot` |
-| 4 — ARM → Bicep | `decompile_arm_template_file`, `decompile_arm_parameters_file`, `get_bicep_file_diagnostics`, `format_bicep_file` |
+| 4 — ARM → Bicep *(optional)* | `decompile_arm_template_file`, `decompile_arm_parameters_file`, `get_bicep_file_diagnostics`, `format_bicep_file` |
+| 5 — Deployment Stacks | `get_bicep_best_practices`, `get_deployment_snapshot` |
 
-## Curriculum — 4 Interactive Modules
+## Curriculum — 5 Interactive Modules (Module 4 Optional)
 
 ### Module 1: Hello Storage Account
 **Goal**: Write a first Bicep file defining a storage account.
@@ -107,19 +105,27 @@ exercises/
 - **PowerShell bridge**: Modules → PowerShell functions that return objects.
 - **Exercise**: Refactor storage into a module, create a main.bicep that calls it, explore AVM catalog.
 
-### Module 4: ARM → Bicep Migration
+### Module 4: ARM → Bicep Migration *(Optional — ARM experience required)*
 **Goal**: Convert existing ARM templates to Bicep.
 
 - **Concepts**: Why migrate? Decompilation workflow, cleanup, best practices.
-- **Exercise**: Decompile `sample.json`, compare ARM vs Bicep side-by-side, clean up and apply best practices.
+- **Exercise**: Decompile `exercises/04-arm-to-bicep/sample.json`, compare ARM vs Bicep side-by-side, clean up and apply best practices.
+- **Gate**: Only include this module if the learner answered **B** (ARM experience) to the background question.
+
+### Module 5: Deployment Stacks
+**Goal**: Deploy resources as a managed, tracked unit and safely manage lifecycle.
+
+- **Concepts**: What is a Deployment Stack? How stacks differ from regular deployments (tracked resources, deny assignments, delete behavior). Action-on-unmanage modes: `detach` vs. `delete`.
+- **PowerShell bridge**: A Deployment Stack is like a PowerShell module — it groups things together, knows what it owns, and can clean up after itself when unloaded.
+- **Exercise**: Deploy the Module 3 template as a stack, inspect managed resources, simulate cleanup by removing a resource and redeploying, then delete the stack.
 
 ## Slash Commands
 
 | Command | Purpose |
 |---------|---------|
-| `/learn-bicep` | Entry point. Welcomes learner, assesses background, starts Module 1. Can resume from where they left off. |
+| `/learn-bicep` | Entry point. Welcomes learner, assesses background, starts Module 1. Can resume from where they left off. Includes Module 4 only for learners with ARM experience. |
 | `/bicep-exercise` | Standalone practice. Agent picks a topic or learner requests one. |
-| `/bicep-quiz` | 5–10 Socratic questions across the curriculum. Agent asks, learner answers, agent explains. |
+| `/bicep-quiz` | 5–10 Socratic questions across all modules. Agent asks, learner answers, agent explains. |
 
 ## Implementation Order
 

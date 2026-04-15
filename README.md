@@ -13,10 +13,12 @@ An interactive, agent-led tutorial that teaches you [Azure Bicep](https://learn.
 | Module | Topic | What you'll build |
 |--------|-------|-------------------|
 | 1 | Hello Storage Account | Your first Bicep resource |
-| 1.5 | Deploy It | Deploy to Azure and see it live |
 | 2 | Parameters, Variables & Conditions | Flexible, reusable templates |
 | 3 | Modules & Outputs | Composable infrastructure (like PowerShell functions) |
-| 4 | ARM → Bicep Migration | Convert existing ARM templates to Bicep |
+| 4 *(optional)* | ARM → Bicep Migration | Convert existing ARM templates to Bicep |
+| 5 | Deployment Stacks | Deploy and manage resources as a tracked unit |
+
+> **Module path**: All learners follow Module 1 → 2 → 3 → 5. Module 4 is only included if you have prior ARM template experience.
 
 ## Getting started
 
@@ -26,7 +28,6 @@ An interactive, agent-led tutorial that teaches you [Azure Bicep](https://learn.
   - [GitHub Copilot CLI](https://docs.github.com/copilot/concepts/agents/about-copilot-cli) (`copilot`)
   - [Claude Code](https://docs.anthropic.com/en/docs/build-with-claude/claude-code/overview) (`claude`)
 - [.NET SDK](https://dotnet.microsoft.com/download) (for the Bicep MCP server)
-- An Azure subscription (for Module 1.5 — deploying resources)
 
 ### 1. Clone the repo
 
@@ -73,10 +74,16 @@ The tutor will check your progress, ask a few background questions, and start yo
 
 The AI tutor uses the [Bicep MCP server](https://github.com/Azure/bicep) to give you real-time feedback as you write code:
 
+- **`get_bicep_best_practices`** — grounds guidance in official best practices at the start of each module
 - **`get_bicep_file_diagnostics`** — checks your code for errors after each change
 - **`get_az_resource_type_schema`** — looks up resource properties so you can explore what's available
+- **`list_az_resource_types_for_provider`** — lists resource types available for a given provider
 - **`format_bicep_file`** — formats your code to Bicep conventions
-- **`decompile_arm_template_file`** — converts ARM JSON to Bicep (Module 4)
+- **`list_avm_metadata`** — shows available Azure Verified Modules (Module 3)
+- **`get_file_references`** — visualizes module dependencies (Module 3)
+- **`get_deployment_snapshot`** — previews what your code would deploy before running it
+- **`decompile_arm_template_file`** — converts ARM JSON to Bicep (Module 4, optional)
+- **`decompile_arm_parameters_file`** — converts ARM parameter files alongside templates (Module 4, optional)
 
 The tutor guides you to write the code yourself — it won't hand you complete solutions.
 

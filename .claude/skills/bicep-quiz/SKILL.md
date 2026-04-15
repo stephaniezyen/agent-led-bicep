@@ -13,7 +13,7 @@ Focus questions on: **$ARGUMENTS**
 
 ## If no topic was provided
 
-Run a mixed quiz covering all 4 modules.
+Run a mixed quiz covering all modules (1, 2, 3, and 5; include Module 4 questions only if the learner has ARM experience).
 
 ## Quiz Format
 

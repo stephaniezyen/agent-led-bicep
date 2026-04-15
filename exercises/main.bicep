@@ -14,3 +14,4 @@
 // Resource type: Microsoft.Storage/storageAccounts
 
 // Write your resource below:
+
